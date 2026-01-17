@@ -10,7 +10,7 @@ from __future__ import annotations
 import inspect
 import json
 from collections.abc import Awaitable, Callable
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any
 
 from agentfacts.core import AgentFacts
 from agentfacts.crypto.did import DID
@@ -22,10 +22,10 @@ from agentfacts.policy.rules import Policy
 FASTAPI_AVAILABLE = False
 
 if TYPE_CHECKING:
-    from agentfacts.plugins import VerificationContext
-
     from fastapi import HTTPException, Request
     from fastapi.responses import JSONResponse
+
+    from agentfacts.plugins import VerificationContext
 
     class BaseHTTPMiddleware:
         """Type-checking stub for Starlette's BaseHTTPMiddleware."""
@@ -42,11 +42,13 @@ else:
         FASTAPI_AVAILABLE = True
     except ImportError:
 
-        class HTTPException(Exception):
+        class HTTPExceptionError(Exception):
             """Fallback HTTPException when FastAPI is unavailable."""
 
             def __init__(self, *args: Any, **kwargs: Any) -> None:
                 super().__init__(*args)
+
+        HTTPException = HTTPExceptionError
 
         class Request:
             """Fallback Request when FastAPI is unavailable."""
@@ -102,7 +104,7 @@ class AgentFactsMiddleware(BaseHTTPMiddleware):
         exclude_paths: list[str] | None = None,
         full_verify: bool = False,
         metadata_provider: Callable[..., Any] | None = None,
-        verification_context: Optional["VerificationContext"] = None,
+        verification_context: VerificationContext | None = None,
     ) -> None:
         """
         Initialize the middleware.
