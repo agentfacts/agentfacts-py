@@ -32,6 +32,7 @@ if TYPE_CHECKING:
 
         def __init__(self, app: Any) -> None:
             pass
+
 else:
     try:
         from fastapi import HTTPException, Request
@@ -41,10 +42,29 @@ else:
         FASTAPI_AVAILABLE = True
     except ImportError:
 
+        class HTTPException(Exception):
+            """Fallback HTTPException when FastAPI is unavailable."""
+
+            def __init__(self, *args: Any, **kwargs: Any) -> None:
+                super().__init__(*args)
+
+        class Request:
+            """Fallback Request when FastAPI is unavailable."""
+
+            pass
+
+        class JSONResponse:
+            """Fallback JSONResponse when FastAPI is unavailable."""
+
+            def __init__(self, *args: Any, **kwargs: Any) -> None:
+                self.args = args
+                self.kwargs = kwargs
+
         class BaseHTTPMiddleware:
             """Fallback base class when FastAPI/Starlette are unavailable."""
 
-            pass
+            def __init__(self, app: Any) -> None:
+                self.app = app
 
 
 # Request state key for verified agent info

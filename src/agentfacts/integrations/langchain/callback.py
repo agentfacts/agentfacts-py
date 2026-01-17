@@ -19,6 +19,7 @@ if TYPE_CHECKING:
         """Type-checking stub for LangChain's BaseCallbackHandler."""
 
         pass
+
 else:
     try:
         from langchain_core.agents import AgentAction, AgentFinish
