@@ -6,22 +6,32 @@ Captures runtime events and updates agent metadata dynamically.
 
 import contextlib
 from datetime import datetime, timezone
-from typing import Any
+from typing import TYPE_CHECKING, Any
 from uuid import UUID
 
-try:
+LANGCHAIN_AVAILABLE = False
+
+if TYPE_CHECKING:
     from langchain_core.agents import AgentAction, AgentFinish
-    from langchain_core.callbacks import BaseCallbackHandler
     from langchain_core.outputs import LLMResult
 
-    LANGCHAIN_AVAILABLE = True
-except ImportError:
-    LANGCHAIN_AVAILABLE = False
-
-    class BaseCallbackHandler:  # type: ignore[no-redef]
-        """Fallback base class when LangChain is unavailable."""
+    class BaseCallbackHandler:
+        """Type-checking stub for LangChain's BaseCallbackHandler."""
 
         pass
+else:
+    try:
+        from langchain_core.agents import AgentAction, AgentFinish
+        from langchain_core.callbacks import BaseCallbackHandler
+        from langchain_core.outputs import LLMResult
+
+        LANGCHAIN_AVAILABLE = True
+    except ImportError:
+
+        class BaseCallbackHandler:
+            """Fallback base class when LangChain is unavailable."""
+
+            pass
 
 
 class AgentFactsCallbackHandler(BaseCallbackHandler):

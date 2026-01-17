@@ -5,6 +5,8 @@ Provides middleware and dependency injection for lightweight
 agent identity checks on incoming requests.
 """
 
+from __future__ import annotations
+
 import inspect
 import json
 from collections.abc import Awaitable, Callable
@@ -17,22 +19,32 @@ from agentfacts.middleware.headers import extract_agent_headers
 from agentfacts.models import VerificationResult
 from agentfacts.policy.rules import Policy
 
+FASTAPI_AVAILABLE = False
+
 if TYPE_CHECKING:
     from agentfacts.plugins import VerificationContext
 
-try:
     from fastapi import HTTPException, Request
     from fastapi.responses import JSONResponse
-    from starlette.middleware.base import BaseHTTPMiddleware
 
-    FASTAPI_AVAILABLE = True
-except ImportError:
-    FASTAPI_AVAILABLE = False
+    class BaseHTTPMiddleware:
+        """Type-checking stub for Starlette's BaseHTTPMiddleware."""
 
-    class BaseHTTPMiddleware:  # type: ignore[no-redef]
-        """Fallback base class when FastAPI/Starlette are unavailable."""
+        def __init__(self, app: Any) -> None:
+            pass
+else:
+    try:
+        from fastapi import HTTPException, Request
+        from fastapi.responses import JSONResponse
+        from starlette.middleware.base import BaseHTTPMiddleware
 
-        pass
+        FASTAPI_AVAILABLE = True
+    except ImportError:
+
+        class BaseHTTPMiddleware:
+            """Fallback base class when FastAPI/Starlette are unavailable."""
+
+            pass
 
 
 # Request state key for verified agent info
