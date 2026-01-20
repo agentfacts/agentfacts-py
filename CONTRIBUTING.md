@@ -45,8 +45,9 @@ cd agentfacts-py
 python -m venv venv
 source venv/bin/activate  # or `venv\Scripts\activate` on Windows
 
-# Install in development mode with all dependencies
+# Install in development mode with dev dependencies
 pip install -e ".[all]"
+pip install pytest pytest-asyncio pytest-cov mypy ruff black
 
 # Install pre-commit hooks (recommended)
 pip install pre-commit
@@ -93,7 +94,7 @@ pre-commit install
 
 5. **Build docs (optional)**
    ```bash
-   pip install -e ".[docs]"
+   pip install mkdocs mkdocs-material "mkdocstrings[python]" pymdown-extensions
    mkdocs serve
    # or
    mkdocs build --strict

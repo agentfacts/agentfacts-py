@@ -180,7 +180,7 @@ class AgentFacts:
         except ImportError as err:
             raise ImportError(
                 "LangChain introspection requires langchain. "
-                "Install with: pip install agentfacts[langchain]"
+                "Install with: pip install langchain langchain-core"
             ) from err
 
         baseline_model, capabilities, constraints = introspect_any(agent)

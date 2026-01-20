@@ -20,6 +20,13 @@ Verify offline with Ed25519 + `did:key`, or auto-introspect popular frameworks f
 pip install agentfacts
 ```
 
+**Optional extras:**
+```bash
+pip install agentfacts[cli]         # CLI tools (agentfacts, af commands)
+pip install agentfacts[middleware]  # FastAPI/Flask middleware
+pip install agentfacts[all]         # All extras
+```
+
 *Requires Python 3.10+.*
 
 ### Quickstart Example

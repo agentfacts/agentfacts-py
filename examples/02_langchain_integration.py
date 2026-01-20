@@ -7,7 +7,7 @@ This example demonstrates how to:
 - Attach AgentFacts to an existing agent workflow
 
 NOTE: This example requires langchain and langchain-openai to be installed:
-    pip install agentfacts[langchain] langchain-openai
+    pip install langchain langchain-core langchain-openai
 """
 
 import os
@@ -20,7 +20,7 @@ try:
     LANGCHAIN_AVAILABLE = True
 except ImportError:
     LANGCHAIN_AVAILABLE = False
-    print("LangChain not installed. Install with: pip install agentfacts[langchain]")
+    print("LangChain not installed. Install with: pip install langchain langchain-core")
 
 from agentfacts import AgentFacts
 from agentfacts.models import BaselineModel, Capability, ModelProvider

@@ -61,7 +61,7 @@ class AgentFactsCallbackHandler(BaseCallbackHandler):
         if not LANGCHAIN_AVAILABLE:
             raise ImportError(
                 "LangChain is required for AgentFactsCallbackHandler. "
-                "Install it with: pip install agentfacts[langchain]"
+                "Install with: pip install langchain langchain-core"
             )
 
         self.agent_facts = agent_facts

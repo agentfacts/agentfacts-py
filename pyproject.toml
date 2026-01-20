@@ -46,10 +46,6 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-langchain = [
-    "langchain>=0.1.0",
-    "langchain-core>=0.1.0",
-]
 middleware = [
     "fastapi>=0.100.0",
     "flask>=3.0.0",
@@ -58,26 +54,13 @@ cli = [
     "click>=8.0.0",
     "rich>=13.0.0",
 ]
-docs = [
-    "mkdocs>=1.5.3",
-    "mkdocs-material>=9.5.0",
-    "mkdocstrings[python]>=0.24.0",
-    "pymdown-extensions>=10.0",
-]
-dev = [
-    "pytest>=7.0.0",
-    "pytest-asyncio>=0.21.0",
-    "pytest-cov>=4.0.0",
-    "mypy>=1.0.0",
-    "ruff>=0.1.0",
-    "black>=23.0.0",
-]
 all = [
-    "agentfacts[langchain,middleware,cli,docs,dev]",
+    "agentfacts[middleware,cli]",
 ]
 
 [project.scripts]
 agentfacts = "agentfacts.cli.main:cli"
+af = "agentfacts.cli.main:cli"
 
 [project.urls]
 Homepage = "https://github.com/agentfacts/agentfacts-py"

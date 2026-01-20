@@ -173,7 +173,7 @@ python examples/10_logging_and_audit.py
 python examples/11_custom_metadata_provider.py
 
 # LangChain example (requires langchain)
-pip install agentfacts[langchain]
+pip install langchain langchain-core
 python examples/02_langchain_integration.py
 
 # FastAPI example (requires fastapi, uvicorn)
